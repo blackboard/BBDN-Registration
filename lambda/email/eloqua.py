@@ -209,7 +209,7 @@ class eloqua_controller():
             }
         })
 
-    def createEmailBody(self, subject, html_body, text_body, sender, sender_name):
+    def createEmailBody(self, subject, html_body, text_body, sender, reply_to, sender_name, bounce_back_email,virtual_mta_id):
 
         return({
             "name": "Registration",
@@ -225,9 +225,10 @@ class eloqua_controller():
             "sendPlainTextOnly": False,  
             "subject": subject,
             "folderId": "35451",
-            "replyToEmail": sender,
+            "replyToEmail": reply_to,
             "replyToName" : sender_name,
             "senderEmail" : sender,
-            "senderName" : sender_name 
-
+            "senderName" : sender_name,
+            "bounceBackEmail" : bounce_back_email,
+            "virtualMTAId": virtual_mta_id
         })
