@@ -73,6 +73,12 @@ def get_config(event_id):
         logger.debug("config['event_name']: " + str(config['event_name']))
         config['parent_id'] = item['EloquaCDOParentId']
         logger.debug("config['parent_id']: " + str(config['parent_id']))
+        config['email_reply_to'] =  item['EmailReplyTo']
+        logger.debug("config['email_reply_to']: " + str(config['email_reply_to']))
+        config['bounce_back_email'] = item['BounceBackEmail']
+        logger.debug("config['bounce_back_email']: " + str(config['bounce_back_email']))
+        config['virtual_mta_id'] = item['VirtualMTAId']
+        logger.debug("config['virtual_mta_id']: " + str(config['virtual_mta_id']))
         
     except Exception as e:
         logger.error(str(e))
@@ -144,8 +150,7 @@ def lambda_handler(event,context):
 
                 html_body = emailBlock.getEmailBlock(given_name, config['hostname'], email, student, password)
                 logger.debug("html_body: " + str(html_body))
-
-                email_body = eloqua_controller.createEmailBody(subject,html_body,text_body,config['email_from'],config['event_name'])
+                email_body = eloqua_controller.createEmailBody(subject,html_body,text_body,config['email_from'],config['email_reply_to'],config['event_name'],config['bounce_back_email'],config['virtual_mta_id'])
                 logger.debug("email_body: " + str(email_body))
                 
                 user_id = eloqua_controller.getUserByEmail(host,email)
